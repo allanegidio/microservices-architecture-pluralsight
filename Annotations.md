@@ -289,13 +289,429 @@ Validate input
     + Better customer experience
 
 
+# Technology for Microservices
 
 
+## Communication
+
+#### Synchronous
+
+- Request response communication
+  + Client to service
+  + Service to service
+  + Service to external
+
+- Remote procedure call
+  > Can use to request a service from a program located in another computer on a network without having to understand the network's details.
+  + Sensitive to change
+
+- HTTP
+  + Work across the internet
+  + Firewall friendly
+
+- REST
+  + CRUD using HTTP verbs
+  + Natural decoupling
+  + Open communication protocol
+  + REST with HATEOS
+    > Includes links (endpoints) into response like Delete, Retrieve, Update...
+
+- Syncronous issues
+  + Both parties have to be available
+  + Performance subject to network quality
+  + Clients must know location of service (host/port).
+
+#### Asynchronous
+
+- Event based
+  + Mitigates the need of client and service availability
+  + Decouples client and service
+
+- Message queueing protocol
+  + Message brokers
+  + Subscriber and publisher are decoupled
+  + Microsoft Message Queuing (MSMQ)
+  + RabbitMQ
+  + ATOM (HTTP to propagate events)
+
+- Asynchronous challenge
+  + Complicated 
+  + Reliance on message broker
+  + Visibility of the transaction
+  + Managing the messaging queue
+
+- Real world systems
+  + Would use both synchronous and asynchronous 
+
+## Hosting Plataforms
+
+#### Virtualization
+
+- A virtual machine as a host
+- Foundation of cloud platforms
+  + Platform as a service (PAAS)
+    + Microsoft Azure
+    + Amazon web services
+    + Your own cloud (for example vSphere)
+
+- Could be more efficient
+  + Takes time to setup
+  + Takes time to load
+  + Take quite a bit of resource
+
+- Unique features
+  + Take snapshot 
+    > (restore VM back to the time when the snapshot was taken)
+  + Clone instances
+
+- Standardised  and mature
+
+#### Container
+
+- Type of virtualization
+- Isolate services from each other
+- Single service per container
+- Different to a virtual machine
+  + Use less resource than VM
+  + Faster than VM
+  + Quicker to create new instances
+- Future of hosted apps
+- Mainly Lunix based
+- Examples
+  + Docker
+  + Rocker
+  + Glassware
+
+#### Self hosting
+
+- Implement your own cloud
+  + Virtualization
+  + Implement containers
+
+- Use of physical machines
+  + Single service on a server
+  + Multiple services on a server
+
+- Challenges
+  + Long-term maintenance
+  + Need for technicians
+  + Training
+  + Need for space
+  + Scaling is not as immediate
+
+#### Registration and Discovery
+
+- Where?
+  + Host, port and version
+- Service registry database
+- Register on startup
+- Deregister service on failure
+- Cloud platforms make it easy
+- Local platform registration options
+  + Self registration on startup 
+  + Third-party registration
+- Local platform discovery options
+  > Either connect directly to the service or use some kind of gateway which all client connect and the gateway retrieves the location from service registry
+  + Client-side discovery
+  + Server-side discovery
+
+## Observable Microservices
+
+#### Monitoring Tech
+
+- Centralised tools
+  + Nagios
+  + PRTG
+  + Load balancers
+  + New Relic
+
+- Desired features
+  + Metrics across servers
+  + Automatic or minimal configuration
+  + Client libraries to send metrics
+  + Test transactions supports
+  + Alerting when something is wrong
+
+- Network monitoring
+- Standardise monitoring
+  + Central tool
+  + Preconfigured virtual machines or containers
+- Real-time monitoring
+
+#### Logging Tech
+
+- Portal for centralised logging data
+  + Elastic log
+  + Log stash
+  + Splunk
+  + Kibana
+  + Graphite
+
+- Client logging libraries
+  + Serilog
+
+- Desired features
+  + Structured logging
+  + Logging across servers
+  + Automatic or minimal configuration
+  + Correlation / Context ID for transaction
+
+- Standardise logging
+  + Central tool
+  + Template for client library
+
+## Microservices Performance
+
+#### Scaling
+
+- How
+  + Creating multiple instances of serviec
+  + Adding resource to existing service
+- Automated or on-demand
+- PAAS auto scaling options
+- Virtualization and containers 
+- Physical host servers
+- Load balancers
+  + API Gateway
+- When to scale up
+  + Performance issues
+  + Monitoring data show that you will have issues
+  + Capacity planning
+
+#### Caching
+
+- Caching to reduce
+  + Client calls to services
+  + Service calls to databases
+  + Service to service calls
+- API Gateway/Proxy level
+  > this way cache implementation is invisible for everything else
+- Client side
+  > Single page applications that download most the data they need and work with that data until they need to make a call back to the system. 
+- Service level
+  > You could also implement caching at service level. So when service A called service B, it caches a response from service B. 
+- Considerations
+  + Simple to setup and manage
+  + Data leaks
+    > Show wrong data.
+
+#### API Gateway
+  > So API gateways are basically the central entry point into our system for client applications.
+
+- Help with performance
+  + Load balancing
+  + Caching
+
+- Help with
+  + Creating central entry point
+  + Exposing services to clients
+  + One interface to many services
+  + Dynamic location of services
+  + Routing to specific instance of service
+    > Example you redirect all requests of Brazil for instances are located in Brazil
+  + Service registry database
+
+- Security
+  + API Gateway
+  + Dedicated security service
+  + Central security vs service level
+
+## Automation Tools
+
+#### Continuous Integration
+
+- Many CI Tools
+  + Azure DevOps
+  + TeamCity
+  + Etc...
+- Desired features
+  + Cross platform
+    + Windows builders, Java builders and others
+  + Source Control integrations
+  + Notifications
+  + IDE Integrations
+- Map a microservice to a CI build
+  > Every microservice have be single focus and independently changeable/deployable
+
+  + Code change triggers build of specific service 
+  + Feedback just received on that service
+  + Builds and tests run quicker
+  + Separate code repository for service
+  + End product is in one place
+  + CI builds to test database changes
+  + Both microservice build and database upgrade are ready
+
+- Avoid one CI build for all service
+
+#### Continuous Deployment
+
+- Many CD Tools
+  + Aim for cross platform tools
+
+- Desired features
+  + Central control panel
+  + Simple to add deployment targets
+  + Support for scripting
+  + Support for build statuses
+  + Integration with CI Tool
+  + Support for multiple environments
+  + Support for PAAS
 
 
+# Moving Forward With Microservices
+
+## Browfield Microservices
+  > When you need migrate existing project to Microservices architecture
+
+#### Approach
+
+ - Existing system
+   + Monolithic system
+   + Organically grown
+   + Seems to large to split
+- Lacks microservices design principles
+- Identify seams
+  + Separation that reflects domains
+  + Identify bounded contexts
+- Start modularising the bounded contexts
+  + Move code incrementally
+  + Tidy up a section per release
+    + Take your time
+    + Existing functionality needs to remain intact
+  + Run unit tests and integration tests to validate change
+  + Keep reviewing
+- Seams are future microservice boundaries
+
+#### Migration
+
+- Code is organised into bounded contexts
+  + Code related to a business domain or function is in one place
+  + Clear boundaries with clear interfaces between each
+- Convert bounded contexts into microservices
+  + Start off with one
+    + Use to get comfortable
+  + Make it switchable
+    + Maintain two versions of the code
+- How to prioritise what to split?
+  + By risk
+  + By technology
+  + By dependencies
+- Incremental approach
+- Integrating with the monolithic
+  + Monitor both for impact
+  + Monitor operations that talk to microservices
+  + Review and improve infrastructure
+  + Incrementally the monolithic will be converted
+
+#### Database Migration
+
+- Avoid shared database
+- Split database using seams
+   + Relate tables to code seams
+- Supporting the existing application
+  + Data layer that connects to a multiple database
+- Tables that link across seams
+  + API call that can fetch that data for a relationship
+- Refactor database into multiple databases
+- Data referential integrity
+- Static data tables
+  + Place that static data within a configuration file and make available to each microservice.
+  + Other option is to have a specific microservice for receive requests from other microservice.
+- Share Datas
+  + Data that read and written to by multiple microservices, move to your own microservice so that the other microservices can interact with it.
+
+#### Transactions
+
+- Transactions ensure data integrity
+- Transactions are simple in monolithic applications
+- Transactions spanning microservices are complex
+  + Complex to observe
+  + Complex to problem solve
+  + Complex to rollback
+- Options for failed trannsactions
+  + Try again later
+    > We place back onto the queue for possibly another service to pick up
+  + Abort entire transaction
+  + Use a transaction manager
+    + In Two Phase Commit, all the participanting microservices first tell the transaction manager if they are okay to commit their part of transaction. 
+    + Disadvantage of transaction manager
+      + Reliance on transaction manager
+      + Delay in processing
+      + Potential bottleneck
+      + Complex to implement
+- Distributed transaction compatibility
+  + Our new microservice needs to tell the monolithic system that their part of the transaction is complete
+  + Can be achieved by placing message in the Message queue
+  + Completed message for the monolith
 
 
++ #### Reporting
 
- 
+- Microservices complicate reporting
+  + Data split across microservices
+  + No central database
+  + Joining data across databases
+  + Slower reporting
+  + Complicate report development
+
+- Possible solutions
+  + Service calls for report data
+    > Create a Reporting service that call other microservices to collect the data. But is not good for large volumes of data or real time reporting.
+  + Data pumps
+    > Send data to a central Reporting database
 
 
+## Greenfield Microservices
+ > Create new system from scratch
+
+- New project
+- Evolving requirements
+- Business domain
+  + Not fully understood
+  + Getting domain experts involved
+  + System boundaries will evolve
+- Teams experience
+  + First microservice
+  + Experienced with microservices
+- Existing system integration
+  + Monolithic system
+  + Estabilished microservices architecture
+- Push for change
+  + Changes to apply microservice principles
+
+> However if requirements are evolving not quite clear to see what microservices are required, it's best to start off with a monolithic design. 
+
+- Start off with monolithic design
+  + High level design
+  + Evolving seams
+  + Develop areas into modules
+  + Boundaries start to become clearer
+  + Refine and refactor design
+  + Split further when required
+- Modules becomes services
+  > Eventually these modules should represent business domains and business functions at a very finite granular level.
++ Shareable code libraries promote to service
++ Review microservice principles at each stage
++ Prioritise by
+  + Minimal viable product
+  + Customer needs and demand
+
+
+## Microservices Provisos
+
+- Accepting initial expense
+  + Longer development times
+  + Cost and training for tools and new skills
+- Skilling up for distributed systems
+  + Handling distributed transactions
+  + Handling reporting
+- Additional testing resource
+  + Latency and performance testing
+  + Testing for resilience
+- Improving infrastructure
+  + Security
+  + Performance
+  + Reliance
+- Overhead tomange microservices
+- Cloud technologies
+- Culture change
